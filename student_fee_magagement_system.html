@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Fees Management System</title>
+    <style>
+         :root {
+            --dark: #172554;
+            --blue: #2563EB;
+            --green: #16A34A;
+            --red: #DC2626;
+            --orange: #D97706;
+            --slate: #475569;
+            --bg: #F1F5F9;
+            --white: #FFFFFF;
+            --light: #E2E8F0;
+            --text: #1E293B;
+            --muted: #64748B;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        /* LOGIN */
+        
+        #login-screen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0F172A;
+        }
+        
+        .login-card {
+            background: #0F172A;
+            width: 100%;
+            max-width: 420px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+        
+        .login-header {
+            background: var(--dark);
+            padding: 28px 20px;
+            text-align: center;
+        }
+        
+        .login-header h1 {
+            color: white;
+            font-size: 1.4rem;
+            line-height: 1.4;
+        }
+        
+        .login-body {
+            padding: 32px 36px 40px;
+        }
+        
+        .login-body h2 {
+            color: #93C5FD;
+            font-size: 1.2rem;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-group label {
+            display: block;
+            color: #94A3B8;
+            font-size: 0.9rem;
+            margin-bottom: 6px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px;
+            background: #1E293B;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .form-group input:focus {
+            border-color: var(--blue);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: white;
+            transition: 0.2s;
+        }
+        
+        .btn-primary {
+            background: var(--blue);
+        }
+        
+        .btn-primary:hover {
+            background: #1D4ED8;
+        }
+        
+        .btn-green {
+            background: var(--green);
+        }
+        
+        .btn-green:hover {
+            background: #15803D;
+        }
+        
+        .btn-red {
+            background: var(--red);
+        }
+        
+        .btn-red:hover {
+            background: #B91C1C;
+        }
+        
+        .btn-orange {
+            background: var(--orange);
+        }
+        
+        .btn-orange:hover {
+            background: #B45309;
+        }
+        
+        .btn-slate {
+            background: var(--slate);
+        }
+        
+        .btn-slate:hover {
+            background: #334155;
+        }
+        
+        .btn-teal {
+            background: #0F766E;
+        }
+        
+        .btn-teal:hover {
+            background: #0D5C56;
+        }
+        
+        .btn-block {
+            width: 100%;
+            padding: 13px;
+            font-size: 1.05rem;
+        }
+        
+        .login-hint {
+            text-align: center;
+            color: #64748B;
+            font-size: 0.85rem;
+            margin-top: 18px;
+        }
+        /* APP */
+        
+        #app-screen {
+            display: none;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: var(--dark);
+            color: white;
+            padding: 0 28px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        
+        .badge {
+            background: #93C5FD;
+            color: var(--dark);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 6px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 20px 40px;
+        }
+        
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 18px;
+        }
+        
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .card {
+            background: var(--white);
+            border: 1px solid var(--light);
+            border-radius: 10px;
+            padding: 20px 16px;
+            text-align: center;
+        }
+        
+        .card .label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        
+        .card .value {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        
+        .card .value.blue {
+            color: var(--blue);
+        }
+        
+        .card .value.dark {
+            color: var(--dark);
+        }
+        
+        .card .value.green {
+            color: var(--green);
+        }
+        
+        .card .value.red {
+            color: var(--red);
+        }
+        
+        .form-card {
+            background: var(--white);
+            border: 1px solid var(--light);
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-card h3 {
+            font-size: 1.05rem;
+            color: var(--dark);
+            margin-bottom: 14px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr 1fr auto;
+            gap: 12px;
+            align-items: end;
+        }
+        
+        .form-row .form-group {
+            margin-bottom: 0;
+        }
+        
+        .form-row label {
+            font-size: 0.85rem;
+            color: var(--muted);
+            font-weight: 500;
+        }
+        
+        .form-row input,
+        .form-row select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--light);
+            border-radius: 7px;
+            font-size: 0.95rem;
+            outline: none;
+            background: white;
+            color: var(--text);
+        }
+        
+        .form-row input:focus,
+        .form-row select:focus {
+            border-color: var(--blue);
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .toolbar h3 {
+            font-size: 1.15rem;
+            color: var(--dark);
+        }
+        
+        .search-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        
+        .search-group input {
+            padding: 9px 14px;
+            border: 1px solid var(--light);
+            border-radius: 7px;
+            font-size: 0.95rem;
+            width: 240px;
+            outline: none;
+        }
+        
+        .search-group input:focus {
+            border-color: var(--blue);
+        }
+        
+        .table-wrap {
+            background: var(--white);
+            border: 1px solid var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 18px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        thead {
+            background: var(--dark);
+            color: white;
+        }
+        
+        th {
+            padding: 13px 14px;
+            text-align: left;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        td {
+            padding: 12px 14px;
+            font-size: 0.92rem;
+            border-bottom: 1px solid #F1F5F9;
+        }
+        
+        tbody tr:nth-child(even) {
+            background: #F8FAFC;
+        }
+        
+        tbody tr:hover {
+            background: #EFF6FF;
+        }
+        
+        .balance-pending {
+            color: var(--red);
+            font-weight: 600;
+        }
+        
+        .balance-cleared {
+            color: var(--green);
+            font-weight: 600;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .actions-bar {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .actions-left,
+        .actions-right {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--muted);
+        }
+        /* MODALS */
+        
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        
+        .modal-overlay.show {
+            display: flex;
+        }
+        
+        .modal {
+            background: white;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 440px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+        }
+        
+        .modal-header {
+            background: var(--dark);
+            color: white;
+            padding: 18px 24px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            border-radius: 12px 12px 0 0;
+        }
+        
+        .modal-body {
+            padding: 24px;
+        }
+        
+        .modal-body .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 7px 0;
+            font-size: 0.95rem;
+        }
+        
+        .modal-body .info-row .label {
+            color: var(--muted);
+        }
+        
+        .modal-body .info-row .value {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .modal-body .divider {
+            border: none;
+            border-top: 1px solid var(--light);
+            margin: 14px 0;
+        }
+        
+        .modal-body input {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1px solid var(--light);
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-top: 8px;
+            outline: none;
+        }
+        
+        .modal-body input:focus {
+            border-color: var(--blue);
+        }
+        
+        .modal-footer {
+            padding: 0 24px 24px;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+        
+        .status-paid {
+            background: #DCFCE7;
+            color: var(--green);
+        }
+        
+        .status-partial {
+            background: #FEF3C7;
+            color: var(--orange);
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            background: var(--dark);
+            color: white;
+            padding: 14px 22px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: 0.3s;
+            z-index: 2000;
+            max-width: 340px;
+        }
+        
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .toast.success {
+            background: var(--green);
+        }
+        
+        .toast.error {
+            background: var(--red);
+        }
+        
+        @media (max-width: 900px) {
+            .cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .form-row {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 1rem;
+            }
+            .search-group input {
+                width: 160px;
+            }
+            th,
+            td {
+                padding: 10px 8px;
+                font-size: 0.82rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- LOGIN -->
+    <div id="login-screen">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>STUDENT FEES<br>MANAGEMENT SYSTEM</h1>
+            </div>
+            <div class="login-body">
+                <h2>Admin Login</h2>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="login-username" value="admin" />
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="login-password" onkeydown="if(event.key==='Enter') login()" />
+                </div>
+                <button class="btn btn-primary btn-block" onclick="login()">Login</button>
+                <p class="login-hint">Default: admin / 45723</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div id="app-screen">
+        <header class="header">
+            <h1>STUDENT FEES MANAGEMENT SYSTEM</h1>
+            <div class="header-right">
+                <span class="badge">ADMIN PANEL</span>
+                <button class="btn btn-slate" onclick="logout()" style="padding:7px 14px;font-size:0.85rem;">Logout</button>
+            </div>
+        </header>
+
+        <div class="container">
+            <h2 class="section-title">Admin Dashboard</h2>
+
+            <div class="cards">
+                <div class="card">
+                    <div class="label">Total Students</div>
+                    <div class="value blue" id="card-students">0</div>
+                </div>
+                <div class="card">
+                    <div class="label">Total Fees Expected</div>
+                    <div class="value dark" id="card-expected">KSH 0.00</div>
+                </div>
+                <div class="card">
+                    <div class="label">Total Fees Paid</div>
+                    <div class="value green" id="card-paid">KSH 0.00</div>
+                </div>
+                <div class="card">
+                    <div class="label">Total Balance</div>
+                    <div class="value red" id="card-balance">KSH 0.00</div>
+                </div>
+            </div>
+
+            <div class="form-card">
+                <h3 id="form-title">Register / Edit Student</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Student Name</label>
+                        <input type="text" id="input-name" placeholder="Enter full name" />
+                    </div>
+                    <div class="form-group">
+                        <label>Class</label>
+                        <select id="input-class">
+              <option value="">Select class</option>
+              <option value="PP1">PP1</option><option value="PP2">PP2</option>
+              <option value="Grade 1">Grade 1</option><option value="Grade 2">Grade 2</option>
+              <option value="Grade 3">Grade 3</option><option value="Grade 4">Grade 4</option>
+              <option value="Grade 5">Grade 5</option><option value="Grade 6">Grade 6</option>
+              <option value="Grade 7">Grade 7</option><option value="Grade 8">Grade 8</option>
+              <option value="Form 1">Form 1</option><option value="Form 2">Form 2</option>
+              <option value="Form 3">Form 3</option><option value="Form 4">Form 4</option>
+            </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Total Fees (KSH)</label>
+                        <input type="number" id="input-total" placeholder="0.00" min="0" step="0.01" />
+                    </div>
+                    <div class="form-group">
+                        <label>Fees Paid (KSH)</label>
+                        <input type="number" id="input-paid" placeholder="0.00" min="0" step="0.01" />
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-green" id="btn-save" onclick="saveStudent()">+ Add Student</button>
+                        <button class="btn btn-slate" id="btn-cancel" onclick="cancelEdit()" style="display:none;">Cancel Edit</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="toolbar">
+                <h3>Student Records</h3>
+                <div class="search-group">
+                    <input type="text" id="search-input" placeholder="Search by name or class..." onkeydown="if(event.key==='Enter') searchStudents()" />
+                    <button class="btn btn-primary" onclick="searchStudents()" style="padding:9px 16px;">Search</button>
+                    <button class="btn btn-slate" onclick="clearSearch()" style="padding:9px 14px;">Refresh</button>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Class</th>
+                            <th>Total Fees</th>
+                            <th>Fees Paid</th>
+                            <th>Balance</th>
+                        </tr>
+                    </thead>
+                    <tbody id="students-tbody"></tbody>
+                </table>
+                <div class="empty-state" id="empty-state" style="display:none;">No students found. Add a student to get started.</div>
+            </div>
+
+            <div class="actions-bar">
+                <div class="actions-left">
+                    <button class="btn btn-slate" onclick="clearForm()">Clear Form</button>
+                    <button class="btn btn-orange" onclick="editSelected()">Edit Selected</button>
+                    <button class="btn btn-green" onclick="openPaymentModal()">Record Payment</button>
+                </div>
+                <div class="actions-right">
+                    <button class="btn btn-red" onclick="deleteSelected()">Delete Selected</button>
+                    <button class="btn btn-teal" onclick="exportCSV()">Export to CSV</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAYMENT MODAL -->
+    <div class="modal-overlay" id="payment-modal">
+        <div class="modal">
+            <div class="modal-header">Record Payment</div>
+            <div class="modal-body">
+                <div class="info-row"><span class="label">Student</span><span class="value" id="pay-name">—</span></div>
+                <div class="info-row"><span class="label">Class</span><span class="value" id="pay-class">—</span></div>
+                <div class="info-row"><span class="label">Current Balance</span><span class="value" id="pay-balance" style="color:var(--red)">—</span></div>
+                <hr class="divider" />
+                <label style="font-size:0.9rem;color:var(--muted);">Enter amount paid (KSH)</label>
+                <input type="number" id="pay-amount" placeholder="0.00" min="0.01" step="0.01" />
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-slate" onclick="closePaymentModal()">Cancel</button>
+                <button class="btn btn-green" onclick="confirmPayment()">Record Payment</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- RECEIPT MODAL -->
+    <div class="modal-overlay" id="receipt-modal">
+        <div class="modal">
+            <div class="modal-header">Payment Receipt</div>
+            <div class="modal-body" id="receipt-content"></div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="downloadReceipt()">Save as Text</button>
+                <button class="btn btn-slate" onclick="closeReceiptModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const STORAGE_KEY = 'student_fees_data';
+        let students = [];
+        let editingId = null;
+        let selectedId = null;
+        let filteredStudents = null;
+        let lastReceiptText = '';
+        let paymentStudent = null;
+
+        function loadData() {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            students = raw ? JSON.parse(raw) : [];
+        }
+
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+        }
+
+        function getNextId() {
+            return students.length === 0 ? 1 : Math.max(...students.map(s => s.id)) + 1;
+        }
+
+        function login() {
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value;
+            if (username === 'admin' && password === '45723') {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('app-screen').style.display = 'block';
+                loadData();
+                renderAll();
+            } else {
+                showToast('Invalid username or password.', 'error');
+                document.getElementById('login-password').value = '';
+                document.getElementById('login-password').focus();
+            }
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                document.getElementById('app-screen').style.display = 'none';
+                document.getElementById('login-screen').style.display = 'flex';
+                document.getElementById('login-password').value = '';
+                cancelEdit();
+                selectedId = null;
+            }
+        }
+
+        function formatKSH(amount) {
+            return 'KSH ' + Number(amount).toLocaleString('en-KE', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        function updateDashboard() {
+            const total = students.length;
+            const expected = students.reduce((s, st) => s + st.totalFees, 0);
+            const paid = students.reduce((s, st) => s + st.feesPaid, 0);
+            const balance = students.reduce((s, st) => s + st.balance, 0);
+            document.getElementById('card-students').textContent = total;
+            document.getElementById('card-expected').textContent = formatKSH(expected);
+            document.getElementById('card-paid').textContent = formatKSH(paid);
+            document.getElementById('card-balance').textContent = formatKSH(balance);
+        }
+
+        function renderTable(list = null) {
+            const data = list || students.slice().sort((a, b) => b.id - a.id);
+            const tbody = document.getElementById('students-tbody');
+            const empty = document.getElementById('empty-state');
+            tbody.innerHTML = '';
+            if (data.length === 0) {
+                empty.style.display = 'block';
+                return;
+            }
+            empty.style.display = 'none';
+
+            data.forEach(st => {
+                const tr = document.createElement('tr');
+                tr.dataset.id = st.id;
+                tr.style.cursor = 'pointer';
+                tr.onclick = () => selectRow(st.id, tr);
+                tr.ondblclick = () => {
+                    selectRow(st.id, tr);
+                    editSelected();
+                };
+                const balanceClass = st.balance <= 0 ? 'balance-cleared' : 'balance-pending';
+                tr.innerHTML = `
+          <td class="text-center">${st.id}</td>
+          <td>${escapeHtml(st.name)}</td>
+          <td class="text-center">${escapeHtml(st.className)}</td>
+          <td class="text-center">${formatKSH(st.totalFees)}</td>
+          <td class="text-center">${formatKSH(st.feesPaid)}</td>
+          <td class="text-center ${balanceClass}">${formatKSH(st.balance)}</td>`;
+                tbody.appendChild(tr);
+            });
+            if (selectedId) {
+                const row = tbody.querySelector(`tr[data-id="${selectedId}"]`);
+                if (row) row.style.background = '#BFDBFE';
+            }
+        }
+
+        function selectRow(id, tr) {
+            document.querySelectorAll('#students-tbody tr').forEach(r => r.style.background = '');
+            selectedId = id;
+            tr.style.background = '#BFDBFE';
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function renderAll() {
+            filteredStudents = null;
+            renderTable();
+            updateDashboard();
+        }
+
+        function saveStudent() {
+            const name = document.getElementById('input-name').value.trim();
+            const className = document.getElementById('input-class').value.trim();
+            const totalStr = document.getElementById('input-total').value.trim();
+            const paidStr = document.getElementById('input-paid').value.trim();
+
+            if (!name || !className || !totalStr || !paidStr) {
+                showToast('Please fill in all student details.', 'error');
+                return;
+            }
+            const totalFees = parseFloat(totalStr);
+            const feesPaid = parseFloat(paidStr);
+            if (isNaN(totalFees) || isNaN(feesPaid)) {
+                showToast('Please enter valid numeric fee amounts.', 'error');
+                return;
+            }
+            if (totalFees <= 0) {
+                showToast('Total fees must be greater than zero.', 'error');
+                return;
+            }
+            if (feesPaid < 0) {
+                showToast('Fees paid cannot be negative.', 'error');
+                return;
+            }
+            if (feesPaid > totalFees) {
+                showToast('Fees paid cannot exceed total fees.', 'error');
+                return;
+            }
+
+            const balance = totalFees - feesPaid;
+
+            if (editingId) {
+                const idx = students.findIndex(s => s.id === editingId);
+                if (idx === -1) {
+                    showToast('Student not found.', 'error');
+                    return;
+                }
+                students[idx] = {...students[idx],
+                    name,
+                    className,
+                    totalFees,
+                    feesPaid,
+                    balance
+                };
+                saveData();
+                showToast('Student details updated successfully!', 'success');
+                cancelEdit();
+            } else {
+                if (students.some(s => s.name.toLowerCase() === name.toLowerCase() && s.className === className)) {
+                    showToast(`A student named "${name}" already exists in ${className}.`, 'error');
+                    return;
+                }
+                students.push({
+                    id: getNextId(),
+                    name,
+                    className,
+                    totalFees,
+                    feesPaid,
+                    balance,
+                    createdAt: new Date().toISOString()
+                });
+                saveData();
+                showToast('Student registered successfully!', 'success');
+                clearForm();
+            }
+            renderAll();
+        }
+
+        function clearForm() {
+            document.getElementById('input-name').value = '';
+            document.getElementById('input-class').value = '';
+            document.getElementById('input-total').value = '';
+            document.getElementById('input-paid').value = '';
+        }
+
+        function cancelEdit() {
+            editingId = null;
+            clearForm();
+            document.getElementById('btn-save').textContent = '+ Add Student';
+            document.getElementById('btn-save').className = 'btn btn-green';
+            document.getElementById('btn-cancel').style.display = 'none';
+            document.getElementById('form-title').textContent = 'Register / Edit Student';
+        }
+
+        function editSelected() {
+            if (!selectedId) {
+                showToast('Please select a student to edit.', 'error');
+                return;
+            }
+            const st = students.find(s => s.id === selectedId);
+            if (!st) {
+                showToast('Student not found.', 'error');
+                return;
+            }
+            editingId = st.id;
+            document.getElementById('input-name').value = st.name;
+            document.getElementById('input-class').value = st.className;
+            document.getElementById('input-total').value = st.totalFees.toFixed(2);
+            document.getElementById('input-paid').value = st.feesPaid.toFixed(2);
+            document.getElementById('btn-save').textContent = 'Update Student';
+            document.getElementById('btn-save').className = 'btn btn-orange';
+            document.getElementById('btn-cancel').style.display = 'inline-flex';
+            document.getElementById('form-title').textContent = 'Editing Student';
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        function deleteSelected() {
+            if (!selectedId) {
+                showToast('Please select a student to remove.', 'error');
+                return;
+            }
+            if (!confirm('Are you sure you want to permanently remove this student?')) return;
+            students = students.filter(s => s.id !== selectedId);
+            if (editingId === selectedId) cancelEdit();
+            selectedId = null;
+            saveData();
+            showToast('Student removed successfully!', 'success');
+            renderAll();
+        }
+
+        function searchStudents() {
+            const keyword = document.getElementById('search-input').value.trim().toLowerCase();
+            if (!keyword) {
+                renderAll();
+                return;
+            }
+            filteredStudents = students.filter(s =>
+                s.name.toLowerCase().includes(keyword) || s.className.toLowerCase().includes(keyword)
+            );
+            renderTable(filteredStudents);
+            if (filteredStudents.length === 0) showToast('No matching student found.', 'error');
+        }
+
+        function clearSearch() {
+            document.getElementById('search-input').value = '';
+            renderAll();
+        }
+
+        function openPaymentModal() {
+            if (!selectedId) {
+                showToast('Please select a student to record a payment.', 'error');
+                return;
+            }
+            const st = students.find(s => s.id === selectedId);
+            if (!st) {
+                showToast('Student not found.', 'error');
+                return;
+            }
+            if (st.balance <= 0) {
+                showToast(`${st.name} has already cleared all fees.`, 'success');
+                return;
+            }
+            paymentStudent = st;
+            document.getElementById('pay-name').textContent = st.name;
+            document.getElementById('pay-class').textContent = st.className;
+            document.getElementById('pay-balance').textContent = formatKSH(st.balance);
+            document.getElementById('pay-amount').value = '';
+            document.getElementById('pay-amount').max = st.balance;
+            document.getElementById('payment-modal').classList.add('show');
+            document.getElementById('pay-amount').focus();
+        }
+
+        function closePaymentModal() {
+            document.getElementById('payment-modal').classList.remove('show');
+            paymentStudent = null;
+        }
+
+        function confirmPayment() {
+            if (!paymentStudent) return;
+            const amount = parseFloat(document.getElementById('pay-amount').value);
+            if (isNaN(amount) || amount <= 0) {
+                showToast('Please enter a valid payment amount.', 'error');
+                return;
+            }
+            if (amount > paymentStudent.balance) {
+                showToast('Amount cannot exceed the current balance.', 'error');
+                return;
+            }
+
+            const idx = students.findIndex(s => s.id === paymentStudent.id);
+            const prevPaid = students[idx].feesPaid;
+            let newPaid = prevPaid + amount;
+            let newBalance = students[idx].totalFees - newPaid;
+            if (newBalance < 0) {
+                newBalance = 0;
+                newPaid = students[idx].totalFees;
+            }
+
+            students[idx].feesPaid = newPaid;
+            students[idx].balance = newBalance;
+            saveData();
+            closePaymentModal();
+            showToast(`Payment of ${formatKSH(amount)} recorded successfully!`, 'success');
+            renderAll();
+            showReceipt(students[idx], amount, prevPaid, newPaid, newBalance);
+        }
+
+        function showReceipt(student, paymentAmount, prevPaid, newPaid, newBalance) {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-GB', {
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric'
+                }) +
+                '  •  ' + now.toLocaleTimeString('en-GB', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            const receiptNo = `RCP-${String(student.id).padStart(5,'0')}-${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}`;
+            const statusText = newBalance <= 0 ? 'FULLY PAID ✓' : 'PARTIAL PAYMENT';
+            const statusClass = newBalance <= 0 ? 'status-paid' : 'status-partial';
+
+            document.getElementById('receipt-content').innerHTML = `
+        <div class="info-row"><span class="label">Receipt No</span><span class="value">${receiptNo}</span></div>
+        <div class="info-row"><span class="label">Date</span><span class="value">${dateStr}</span></div>
+        <div class="info-row"><span class="label">Student Name</span><span class="value">${escapeHtml(student.name)}</span></div>
+        <div class="info-row"><span class="label">Class</span><span class="value">${escapeHtml(student.className)}</span></div>
+        <hr class="divider" />
+        <div class="info-row"><span class="label">Total Fees</span><span class="value">${formatKSH(student.totalFees)}</span></div>
+        <div class="info-row"><span class="label">Previously Paid</span><span class="value">${formatKSH(prevPaid)}</span></div>
+        <div class="info-row"><span class="label">Amount Paid Now</span><span class="value">${formatKSH(paymentAmount)}</span></div>
+        <div class="info-row"><span class="label">Total Paid</span><span class="value">${formatKSH(newPaid)}</span></div>
+        <div class="info-row"><span class="label">Balance Remaining</span><span class="value">${formatKSH(newBalance)}</span></div>
+        <div style="text-align:center;margin-top:16px;"><span class="status-badge ${statusClass}">${statusText}</span></div>`;
+
+            lastReceiptText = `
+================================================
+           STUDENT FEES PAYMENT RECEIPT
+================================================
+Receipt No   : ${receiptNo}
+Date         : ${dateStr}
+
+Student Name : ${student.name}
+Class        : ${student.className}
+
+------------------------------------------------
+Total Fees          : ${formatKSH(student.totalFees)}
+Previously Paid     : ${formatKSH(prevPaid)}
+Amount Paid Now     : ${formatKSH(paymentAmount)}
+Total Paid          : ${formatKSH(newPaid)}
+Balance Remaining   : ${formatKSH(newBalance)}
+------------------------------------------------
+Status              : ${statusText}
+================================================
+Thank you for your payment.`.trim();
+
+            document.getElementById('receipt-modal').classList.add('show');
+        }
+
+        function closeReceiptModal() {
+            document.getElementById('receipt-modal').classList.remove('show');
+        }
+
+        function downloadReceipt() {
+            const blob = new Blob([lastReceiptText], {
+                type: 'text/plain'
+            });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Receipt_${new Date().toISOString().slice(0,10)}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Receipt downloaded!', 'success');
+        }
+
+        function exportCSV() {
+            const data = filteredStudents || students.slice().sort((a, b) => b.id - a.id);
+            if (data.length === 0) {
+                showToast('No records to export.', 'error');
+                return;
+            }
+            const headers = ['ID', 'Name', 'Class', 'Total Fees', 'Fees Paid', 'Balance'];
+            const rows = data.map(s => [
+                s.id, `"${s.name.replace(/"/g,'""')}"`, `"${s.className.replace(/"/g,'""')}"`,
+                s.totalFees.toFixed(2), s.feesPaid.toFixed(2), s.balance.toFixed(2)
+            ]);
+            const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+            const blob = new Blob([csv], {
+                type: 'text/csv;charset=utf-8;'
+            });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `student_fees_${new Date().toISOString().slice(0,10)}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast(`Exported ${data.length} record(s) successfully!`, 'success');
+        }
+
+        function showToast(msg, type = '') {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = 'toast show' + (type ? ' ' + type : '');
+            setTimeout(() => toast.classList.remove('show'), 3200);
+        }
+
+        document.getElementById('payment-modal').addEventListener('click', function(e) {
+            if (e.target === this) closePaymentModal();
+        });
+        document.getElementById('receipt-modal').addEventListener('click', function(e) {
+            if (e.target === this) closeReceiptModal();
+        });
+
+        document.getElementById('login-password').focus();
+    </script>
+</body>
+
+</html>
